@@ -15,10 +15,12 @@ public class GetPicture : MonoBehaviour
     private ImageClassify client;
     //Texture的中间部分，“桥”的作用
     private Texture baseTexture;
+    #endregion
+    #region public
     public Image test;
     public GameObject resultPanel;
+    public GameObject loading;
     #endregion
-
     private void Start()
     {
         //监听上传照片Button
@@ -35,8 +37,8 @@ public class GetPicture : MonoBehaviour
     /// </summary>
     private void UploadPicture()
     {
-        //loading.SetActive(true);
-        //loadingText.SetActive(true);
+        loading.SetActive(true);
+        StartCoroutine(Loading());
         //获取到动态图片的Texture
         baseTexture = UIManager.instance.camera_display.mainTexture;
         //转换贴图格式
@@ -67,6 +69,7 @@ public class GetPicture : MonoBehaviour
     {
         //var images = File.ReadAllBytes(@"C:\Users\Administrator\Desktop\pics\chuju.jpg");
         //var images = File.ReadAllBytes("/sdcard/DCIM/SaveImage/Pic.png");
+
         var images = File.ReadAllBytes("/sdcard/DCIM/SaveImage/balomn.png");
         // 调用通用物体识别，可能会抛出网络等异常，请使用try/catch捕获
         var result = client.AdvancedGeneral(images);
@@ -77,7 +80,6 @@ public class GetPicture : MonoBehaviour
                 "baike_num", 5
             }
         };
-
         //Newwonsoft 解析数据        
         NewtonsoftRead(result.ToString());
     }
@@ -85,7 +87,6 @@ public class GetPicture : MonoBehaviour
     private void NewtonsoftRead(string datajson)
     {
         JObject json = JObject.Parse(datajson);
-        string dataS = json["result"][1].ToString();
         int length = int.Parse(json["result_num"].ToString());
         Debug.Log(length);
         JObject[] jb = new JObject[length];
@@ -101,6 +102,12 @@ public class GetPicture : MonoBehaviour
             UIManager.instance.name_texts[i].text = name[i];
             UIManager.instance.score_texts[i].text = id[i].ToString();
         }
-        resultPanel.SetActive(true);     
+        resultPanel.SetActive(true);
+        
+    }
+    IEnumerator Loading()
+    {
+        yield return new WaitForSeconds(3f);
+        loading.SetActive(false);
     }
 }

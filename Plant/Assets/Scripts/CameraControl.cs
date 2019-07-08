@@ -19,6 +19,7 @@ public class CameraControl : MonoBehaviour
         //返回主界面并关掉相机
         UIManager.instance.back_menu_click.onClick.AddListener(BackMainPanel);
     }
+
     /// <summary>
     /// 切换到拍照场景
     /// 实现拍照
@@ -33,8 +34,8 @@ public class CameraControl : MonoBehaviour
     /// </summary>
     private void BackMainPanel()
     {
-       // scanPlantPanel.SetActive(false);
-       //停止相机
+        // scanPlantPanel.SetActive(false);
+        //停止相机
         UIManager.instance.tex.Stop();
         //关掉截图
         UIManager.instance.picture_get.gameObject.SetActive(false);
@@ -53,7 +54,7 @@ public class CameraControl : MonoBehaviour
         {
             WebCamDevice[] devices = WebCamTexture.devices;
             deviceName = devices[0].name;
-            UIManager.instance.tex= new WebCamTexture(deviceName, 1080, 1500, 60);
+            UIManager.instance.tex = new WebCamTexture(deviceName, 1080, 1500, 60);
             //打开相机
             StartCamera();
             //把相机画面显示在RawImage里

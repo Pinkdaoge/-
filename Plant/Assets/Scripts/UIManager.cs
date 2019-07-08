@@ -30,4 +30,5 @@ public class UIManager : MonoBehaviour
     public Text[] score_texts;
     public Text[] name_texts;
 
+    //For test 
 }
