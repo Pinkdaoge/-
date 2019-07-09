@@ -23,6 +23,7 @@ public class GetPicture : MonoBehaviour
     #endregion
     private void Start()
     {
+        Screen.fullScreen = false;
         //监听上传照片Button
         UIManager.instance.enter_upload_click.onClick.AddListener(UploadPicture);
         var APP_ID = "16649689";
@@ -37,8 +38,6 @@ public class GetPicture : MonoBehaviour
     /// </summary>
     private void UploadPicture()
     {
-        loading.SetActive(true);
-        StartCoroutine(Loading());
         //获取到动态图片的Texture
         baseTexture = UIManager.instance.camera_display.mainTexture;
         //转换贴图格式
@@ -103,11 +102,6 @@ public class GetPicture : MonoBehaviour
             UIManager.instance.score_texts[i].text = id[i].ToString();
         }
         resultPanel.SetActive(true);
-        
-    }
-    IEnumerator Loading()
-    {
-        yield return new WaitForSeconds(3f);
-        loading.SetActive(false);
+
     }
 }
